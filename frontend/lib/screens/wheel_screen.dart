@@ -303,13 +303,7 @@ class _WheelScreenState extends State<WheelScreen> with SingleTickerProviderStat
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          if (_mode == 'spin')
-            IconButton(
-              icon: const Icon(Icons.edit_note_rounded, size: 26),
-              tooltip: 'Editar Roleta',
-              onPressed: () => setState(() => _mode = 'edit'),
-            )
-          else
+          if (_mode != 'spin')
             TextButton(
               onPressed: () {
                 _wheel.name = _titleController.text.trim().isEmpty ? 'Roleta' : _titleController.text.trim();
@@ -826,6 +820,37 @@ class _WheelScreenState extends State<WheelScreen> with SingleTickerProviderStat
             ),
           ],
         ),
+        const SizedBox(height: 12),
+
+        // Editar roleta (embaixo, fácil de alcançar, com texto explicativo)
+        SizedBox(
+          width: double.infinity,
+          height: 48,
+          child: OutlinedButton.icon(
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(
+                color: _isSpinning ? Colors.grey.shade400 : AppColors.petroleo,
+                width: 1.5,
+              ),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+            ),
+            onPressed: _isSpinning ? null : () => setState(() => _mode = 'edit'),
+            icon: Icon(
+              Icons.edit_rounded,
+              size: 18,
+              color: _isSpinning ? Colors.grey.shade400 : AppColors.petroleo,
+            ),
+            label: Text(
+              'Editar opções da roleta',
+              style: GoogleFonts.hankenGrotesk(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                color: _isSpinning ? Colors.grey.shade400 : AppColors.petroleo,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
       ],
     );
   }
