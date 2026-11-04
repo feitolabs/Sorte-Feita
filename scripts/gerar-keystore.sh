@@ -3,6 +3,12 @@
 # Você digita as senhas; elas não ficam neste script.
 set -euo pipefail
 cd "$(dirname "$0")/.."
+if ! command -v keytool >/dev/null 2>&1; then
+  for d in "/c/Program Files/Android/Android Studio/jbr/bin" "/c/Program Files/Android/Android Studio/jre/bin" "$JAVA_HOME/bin"; do
+    [ -x "$d/keytool.exe" ] || [ -x "$d/keytool" ] && PATH="$d:$PATH" && break
+  done
+fi
+command -v keytool >/dev/null 2>&1 || { echo "keytool não encontrado. Instale o JDK ou o Android Studio."; exit 1; }
 KS="$HOME/sorte-feita-release.jks"
 [ -e "$KS" ] && { echo "Já existe $KS — abortando para não sobrescrever."; exit 1; }
 read -r -s -p "Senha da keystore (mín. 6): " PASS; echo
