@@ -64,30 +64,8 @@ class LocalStorageService extends ChangeNotifier {
         _history = [];
       }
     } else {
-      // Default seed history for first run
-      _history = [
-        HistoryEntry(
-          type: 'wheel',
-          title: 'O que comer hoje',
-          summary: 'Roleta · 6 opções · ontem',
-          createdAt: DateTime.now().subtract(const Duration(days: 1)),
-          configSnapshot: WheelModel.defaultFoodWheel().toJson(),
-          result: 'Hambúrguer',
-        ),
-        HistoryEntry(
-          type: 'name_draw',
-          title: 'Turma 7B · apresentação',
-          summary: 'Nomes · 28 participantes · seg.',
-          createdAt: DateTime.now().subtract(const Duration(days: 2)),
-          configSnapshot: {
-            'winners_count': 3,
-            'alternates_count': 2,
-            'participants': ['Ana', 'Bruno', 'Carla', 'Diego']
-          },
-          result: ['Gabriela', 'Diego', 'Ana Beatriz'],
-        ),
-      ];
-      _saveHistory();
+      // Primeira abertura: histórico vazio (sem dados inventados).
+      _history = [];
     }
   }
 

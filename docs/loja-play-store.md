@@ -44,3 +44,9 @@ ID `remove_ads` · Tipo: **Produto gerenciado (não consumível)** · Nome: "Rem
 
 ## Capturas de tela a tirar (mín. 2, ideal 6)
 Início · Roleta (antes do giro) · Resultado do sorteio de nomes · Equipes · Histórico · Catálogo. Ícone 512 já existe em `frontend/assets/icone/png/sorte-feita-icone-512.png`.
+
+## Arquivos prontos (docs/play-store/)
+- `feature-graphic-1024x500.png` — imagem de destaque
+- `icone-512.png` — ícone da loja
+- `screenshots/` — 5 capturas 1080x2400 (início, roleta, resultado, ferramentas, histórico)
+- `../politica-de-privacidade.html` e `../termos-de-uso.html` — prontos para hospedar (GitHub Pages). Troque `[PREENCHER: e-mail]` pelo seu e-mail de contato antes.
