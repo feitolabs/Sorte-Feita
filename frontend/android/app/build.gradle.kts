@@ -35,6 +35,7 @@ android {
 
     buildTypes {
         release {
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             // Assinatura de release via android/key.properties (fora do Git).
             // Sem ele, usa a chave debug apenas para testes locais.
             val keyProps = Properties()
