@@ -1,0 +1,18 @@
+Sorte Feita · um app feito labs
+
+CORES (paleta Feito Labs, Opção C · Tecnológica)
+Petróleo        #0E3B43   fundo escuro, texto, botão principal
+Areia           #F3EDE2   fundo claro (tema padrão)
+Azul Rio        #1F7A8C   destaques, "feita" no logotipo (texto só 24px+ ou negrito 19px+)
+Azul Rio claro  #5FB3C2   destaque no fundo escuro
+Névoa           #8FC1C9   bordas, formas, segmento da roleta (nunca texto)
+Névoa claro     #A9D3DA   texto de apoio no fundo escuro
+Brasa           #F26B21   único acento quente: Criar, Girar, Sortear, ponteiro (1 por tela)
+Brasa claro     #FF8A4C   ponto do símbolo no fundo escuro
+
+FONTES (Google Fonts, gratuitas)
+Bricolage Grotesque 400/800 · títulos, logotipo, números
+Hanken Grotesk 400/500/700 · textos e interface
+
+ÍCONES DE INTERFACE
+Traço 2px, 24x24, cor Petróleo. No código, troque stroke="#0E3B43" por stroke="currentColor".

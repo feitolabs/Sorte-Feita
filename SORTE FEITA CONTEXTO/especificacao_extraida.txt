@@ -1,0 +1,1080 @@
+SORTEIA
+ESPECIFICAÇÃO COMPLETA DO PRODUTOFUNCIONAL, TÉCNICA E OPERACIONAL
+Aplicativo gratuito de sorteios, roletas e ferramentas aleatóriasMonetização exclusiva por publicidade
+Versão 1.0 • 30 de outubro de 2026Documento-base para desenvolvimento assistido por IA
+Controle do documento
+Campo
+Definição
+Produto
+Sorteia
+Versão
+1.0 — Especificação de referência para MVP e evolução
+Modelo comercial
+Gratuito para todos; receita exclusivamente publicitária
+Plataformas-alvo
+Web responsiva e Android via Capacitor; iOS posterior mediante validação
+Persistência inicial
+Local-first: IndexedDB na Web e armazenamento local encapsulado no app
+Backend
+Não obrigatório para as ferramentas essenciais do MVP
+Público
+Público geral, professores, estudantes, famílias, criadores, equipes e pequenos negócios
+Princípio central
+Nenhuma assinatura, plano Premium, créditos, venda de temas ou desbloqueio pago
+Status
+Documento de especificação; decisões técnicas finais devem ser validadas durante a implementação
+Como utilizar este documento
+Este documento deve ser tratado como fonte principal de requisitos do produto. Cada funcionalidade deve ser implementada com base nos fluxos, regras, estados, critérios de aceite e testes descritos. Quando houver conflito entre uma solução visual e uma regra de negócio, prevalece a regra de negócio e a integridade do resultado.
+O documento separa o MVP obrigatório, as melhorias posteriores e as funcionalidades que estão explicitamente fora do escopo. O objetivo é impedir expansão descontrolada e evitar que o desenvolvimento assistido por IA invente funcionalidades, regras ou serviços não aprovados.
+1. Resumo executivo e visão do produto
+Sorteia é uma plataforma gratuita para criar e executar roletas, sorteios, divisões de grupos e pequenas ferramentas de decisão aleatória. O produto deverá reduzir o tempo necessário para preparar uma atividade, executar a seleção e compartilhar o resultado.
+1.1 Objetivos do produto
+Permitir que uma pessoa execute um sorteio simples em poucos segundos, sem cadastro obrigatório.
+Oferecer um conjunto coeso de ferramentas em uma única interface.
+Funcionar offline nas funcionalidades essenciais depois que a aplicação estiver carregada/instalada.
+Permitir personalização e reutilização de atividades sem cobrar por isso.
+Gerar receita exclusivamente por publicidade, sem interromper a tarefa principal.
+Construir uma base técnica que permita adicionar sincronização e recursos online posteriormente, sem reescrever o motor de sorteio.
+1.2 Proposta de valor
+“Todas as ferramentas de sorteio e decisão de que você precisa, em um só lugar, gratuitamente.”
+1.3 Princípios inegociáveis
+Não haverá assinatura, plano Premium, plano Business pago, créditos, compras internas, paywall ou venda de temas.
+Todas as ferramentas incluídas no produto serão acessíveis gratuitamente.
+Publicidade nunca poderá alterar, influenciar ou condicionar o resultado aleatório.
+Não exibir anúncios durante o giro, seleção, processamento ou antes da apresentação do resultado.
+Não exigir conta para utilizar as ferramentas essenciais.
+Não enviar listas de participantes para servidores sem necessidade, transparência e consentimento apropriado.
+Não comercializar rifas pagas, apostas ou chances de ganhar prêmios.
+Não afirmar que um sorteio é legalmente autorizado, auditado ou certificado sem base verificável.
+2. Escopo funcional e limites
+2.1 MVP obrigatório
+ID
+Módulo
+Escopo obrigatório
+Prioridade
+MVP-01
+Navegação
+Início, ferramentas, modelos, histórico, favoritos e configurações
+P0
+MVP-02
+Roleta
+Criar, editar, personalizar, girar, salvar e repetir
+P0
+MVP-03
+Sorteio de nomes
+Lista, validação, múltiplos ganhadores e suplentes
+P0
+MVP-04
+Números
+Intervalo, quantidade, exclusões e repetição
+P0
+MVP-05
+Equipes
+Divisão equilibrada por quantidade de equipes ou membros
+P0
+MVP-06
+Duplas/trios
+Formação automática e tratamento de sobras
+P0
+MVP-07
+Sim ou não
+Respostas padrão ou personalizadas
+P0
+MVP-08
+Tarefas
+Distribuição aleatória de tarefas entre pessoas
+P1
+MVP-09
+Desafios/letras
+Geradores simples e reutilizáveis
+P1
+MVP-10
+Histórico local
+Consultar, duplicar, repetir, excluir e pesquisar
+P0
+MVP-11
+Compartilhamento
+Cartão de resultado e compartilhamento nativo quando suportado
+P0
+MVP-12
+Publicidade
+Integração controlada por configuração e consentimento
+P1
+MVP-13
+Analytics
+Eventos mínimos de produto e publicidade sem conteúdo pessoal desnecessário
+P1
+2.2 Fora do MVP
+Contas de usuário e sincronização multi-dispositivo.
+Colaboração em tempo real e salas compartilhadas.
+Links públicos editáveis de roletas.
+Painel corporativo multiusuário.
+Verificação criptográfica pública avançada/commit-reveal.
+Importação de XLSX complexa; no MVP aceitar CSV e TXT com validação.
+iOS, até que a versão Web/Android e a economia publicitária sejam validadas.
+Qualquer pagamento, compra, assinatura ou funcionalidade paga.
+2.3 Tipos de usuário
+Persona
+Necessidade principal
+Ferramentas mais relevantes
+Usuário casual
+Decidir algo rapidamente
+Roleta, sim/não, comida, filme
+Professor
+Sortear alunos e formar grupos
+Nomes, equipes, perguntas, letras
+Organizador
+Executar sorteios em eventos
+Nomes, números, roleta, modo apresentação
+Criador de conteúdo
+Exibir seleção visual em vídeo/live
+Roleta, tela cheia, compartilhamento
+Equipe/empresa
+Distribuir tarefas e responsabilidades
+Equipes, duplas, tarefas, histórico
+Família/grupo de amigos
+Escolher atividades e brincadeiras
+Decisões, desafios, cartas
+3. Arquitetura da informação e navegação
+3.1 Navegação principal
+Área
+Conteúdo
+Ação primária
+Início
+Atalhos, ferramentas populares, recentes e modelos
+Abrir ferramenta
+Ferramentas
+Catálogo de todas as funcionalidades
+Selecionar categoria
+Criar
+Atalho para nova roleta/sorteio
+Criar atividade
+Histórico
+Atividades salvas localmente
+Abrir ou repetir
+Favoritos
+Ferramentas e modelos marcados
+Executar novamente
+Configurações
+Som, tema, privacidade, dados e sobre
+Alterar preferência
+3.2 Regras gerais de navegação
+A navegação deve ser responsiva e adequada a telas pequenas; no mobile, utilizar barra inferior com até cinco destinos.
+No desktop, utilizar navegação lateral ou cabeçalho compacto.
+Manter o contexto quando o usuário retornar de uma tela de resultado para a configuração.
+Todas as telas devem possuir estado de carregamento, estado vazio, erro e sucesso quando aplicável.
+Não abrir cadastro ou solicitação de login para executar funções locais.
+Botões destrutivos (excluir, limpar lista, apagar histórico) devem solicitar confirmação.
+3.3 Tela inicial — especificação
+Elemento
+Comportamento
+Critério de aceite
+Marca Sorteia
+Retorna à página inicial
+Logo clicável e acessível
+Busca
+Pesquisa ferramentas e modelos por nome/sinônimo
+Resultados atualizados sem recarregar a página
+Ação Roleta
+Abre criação de roleta
+Nova roleta vazia com exemplos orientativos
+Ação Sorteio
+Abre catálogo de sorteios
+Categorias visíveis
+Ação Equipes
+Abre gerador de equipes
+Formulário inicial disponível
+Recentes
+Mostra até N atividades recentes configuráveis
+Estado vazio com CTA para criar
+Modelos
+Mostra modelos locais incluídos no app
+Modelo abre cópia editável
+Espaço de anúncio
+Renderiza somente se elegível e carregado
+Nunca desloca controles críticos nem cobre conteúdo
+3.4 Catálogo de ferramentas
+Organizar por categorias: Roletas; Sorteios; Grupos; Decisões; Geradores; Educação e Diversão. Cada cartão apresenta nome, descrição curta, ícone, indicação de uso e botão de abertura. Não usar classificações como Premium ou bloqueado.
+4. Design system e experiência
+4.1 Direção visual
+Visual moderno, alegre, confiável e inclusivo, sem parecer um cassino ou plataforma de apostas.
+Utilizar cores vivas com contraste acessível; evitar excesso de gradientes e efeitos que prejudiquem legibilidade.
+Tipografia legível e hierarquia consistente.
+Componentes reutilizáveis: botão primário/secundário, campo de texto, chip, cartão, modal, toast, seletor de cor, lista editável e painel de resultado.
+Respeitar prefers-reduced-motion e oferecer redução/desativação de animações.
+Áreas de toque recomendadas de pelo menos 44 × 44 CSS px.
+4.2 Estados de componentes
+Componente
+Estados mínimos
+Botão
+Normal, hover, pressionado, foco, desabilitado, carregando
+Campo
+Vazio, preenchido, foco, erro, desabilitado
+Lista de participantes
+Vazia, válida, duplicada, inválida, carregando arquivo
+Roleta
+Em edição, pronta, girando, resultado, erro
+Anúncio
+Carregando, preenchido, sem inventário, erro, não elegível
+Histórico
+Carregando, com itens, vazio, falha de leitura
+4.3 Acessibilidade
+Todos os controles devem ser operáveis por teclado.
+Foco visível e ordem de tabulação lógica.
+Rótulos acessíveis para ícones e campos.
+Não comunicar resultado apenas por cor; exibir texto do resultado.
+Animações não devem ser a única forma de indicar progresso.
+Leitores de tela devem receber anúncio do resultado após a conclusão.
+Contraste conforme WCAG 2.2 AA como objetivo de conformidade.
+5. Módulo de roletas — requisitos detalhados
+5.1 Tela de criação
+Campo/controle
+Tipo
+Regra
+Nome da roleta
+Texto
+Obrigatório; 1–60 caracteres; aparar espaços
+Opções
+Lista editável
+Mínimo 2 opções ativas para girar
+Adicionar opção
+Botão
+Cria linha vazia e foca o campo
+Remover opção
+Ação por linha
+Se restarem menos de 2 ativas, desabilitar giro
+Cor
+Seletor
+Cor individual; texto deve manter contraste
+Ícone/imagem
+Opcional
+Validar formato e tamanho; fallback para ícone
+Peso
+Número decimal positivo
+Padrão 1; zero não participa ou deve ser rejeitado conforme UX definida
+Ativa
+Toggle
+Opção inativa não entra no sorteio
+Reordenar
+Drag-and-drop e alternativa por botões
+Persistir a ordem
+Colar lista
+Textarea/modal
+Uma opção por linha; remover linhas vazias opcionalmente
+Importar CSV/TXT
+Upload
+Validar codificação, tamanho, cabeçalho e erros
+Salvar
+Botão
+Validar e persistir localmente
+Girar
+Botão
+Somente se configuração válida
+5.2 Regras do motor da roleta
+Resultado calculado no motor de aleatoriedade antes da animação.
+Animação deve terminar no segmento correspondente ao resultado calculado.
+Probabilidade igual: cada opção ativa possui peso 1.
+Probabilidade ponderada: chance = peso da opção / soma dos pesos ativos.
+Peso deve ser finito, maior que zero e dentro de limite técnico documentado.
+Opções inativas são excluídas da seleção e da soma dos pesos.
+Se a lista mudar enquanto gira, bloquear edição até finalizar ou cancelar com estado explícito.
+Não reutilizar o resultado anterior como fonte de aleatoriedade.
+Repetição permitida significa que uma mesma opção pode vencer em giros sucessivos.
+Remoção após sorteio desativa ou remove a opção após resultado; a decisão deve ser informada claramente ao usuário.
+5.3 Fluxo de giro
+Validar pelo menos duas opções ativas e pesos válidos.
+Desabilitar controles de edição e botão de giro.
+Solicitar resultado ao random engine.
+Persistir evento de execução e resultado, quando o usuário tiver habilitado histórico.
+Calcular ângulo final dentro do segmento selecionado, com margem visual para evitar cair na borda.
+Executar animação com duração configurável e easing suave.
+Exibir resultado textual e visual.
+Reabilitar controles e oferecer girar novamente, remover vencedor (se configurado), compartilhar ou voltar.
+5.4 Regras de geometria
+Para n segmentos com pesos iguais, cada segmento ocupa 360/n graus. Para pesos diferentes, a extensão angular de cada segmento deve ser proporcional ao peso. O ponteiro e a convenção de ângulo zero devem ser definidos em um único utilitário de geometria e cobertos por testes. O cálculo da posição final deve considerar o ângulo inicial, o sentido do giro, a quantidade de voltas completas e o centro do segmento vencedor.
+5.5 Critérios de aceite da roleta
+Não permitir girar com menos de duas opções ativas.
+Não permitir peso inválido, infinito, NaN ou negativo.
+Resultado apresentado deve corresponder exatamente ao segmento apontado.
+Após 100 giros de teste, a interface não deve ficar travada nem acumular animações.
+Desativar sons não pode alterar o resultado.
+Reduzir movimento deve substituir animação longa por transição curta ou resultado instantâneo.
+Salvar e reabrir deve preservar nome, opções, pesos, cores e configurações.
+6. Sorteio de nomes
+6.1 Dados de entrada
+Campo
+Regra
+Nome do sorteio
+Opcional; se vazio, gerar nome como “Sorteio de nomes — data”
+Participantes
+Um por linha ou inserção individual
+Quantidade de ganhadores
+Inteiro >= 1 e <= participantes elegíveis
+Suplentes
+Inteiro >= 0 e <= participantes restantes
+Duplicados
+Configuração: permitir ou remover duplicados exatos
+Repetição
+Por padrão, não repetir participantes na mesma execução
+Normalização
+Remover espaços no início/fim; preservar acentos e grafia
+Lista vazia
+Bloquear execução
+Participante em branco
+Ignorar com indicação ao usuário
+6.2 Regras
+Cada linha representa uma entrada, inclusive se nomes iguais forem permitidos.
+Se duplicados forem removidos, explicar quantas entradas foram removidas.
+Não deduplicar automaticamente por similaridade; “Ana” e “Ana Maria” são entradas distintas.
+Selecionar ganhadores sem reposição dentro da mesma execução, salvo configuração futura explicitamente diferente.
+Suplentes devem ser selecionados do conjunto remanescente, sem sobreposição com ganhadores.
+Se a quantidade solicitada exceder os participantes elegíveis, bloquear e informar o limite.
+Não enviar a lista para analytics, logs de terceiros ou publicidade.
+6.3 Resultado
+Exibir ganhadores em ordem de seleção, suplentes em seção separada, total de participantes elegíveis, data/hora local e resumo das regras. Permitir copiar, compartilhar, repetir com a mesma lista e duplicar como nova atividade.
+6.4 Critérios de aceite
+Com 10 entradas e 3 ganhadores, retornar exatamente 3 entradas distintas.
+Com suplentes, nenhum suplente pode ser ganhador na mesma execução.
+Lista vazia ou quantidade inválida impede execução.
+Permitir nomes repetidos quando a opção estiver ativa, tratando cada linha como entrada independente.
+Repetir sorteio deve gerar nova execução, sem reutilizar resultado anterior.
+7. Gerador de números
+7.1 Campos
+Campo
+Regra
+Mínimo
+Inteiro; padrão 1
+Máximo
+Inteiro; padrão 100
+Quantidade
+Inteiro >= 1
+Permitir repetição
+Padrão desligado
+Números excluídos
+Lista de inteiros dentro do intervalo
+Ordenar resultado
+Ligado/desligado; padrão ligado
+Formato
+Lista visual e opção copiar
+7.2 Validações e algoritmo
+Mínimo deve ser menor ou igual ao máximo.
+Quantidade não pode exceder a quantidade de números elegíveis quando repetição estiver desligada.
+Excluir valores fora do intervalo deve gerar aviso e não alterar silenciosamente a configuração.
+Sem repetição: selecionar amostra sem reposição.
+Com repetição: realizar seleções independentes, permitindo valores repetidos.
+Evitar algoritmo ingênuo que gere números até não repetir em intervalos muito grandes; utilizar método eficiente de amostragem.
+7.3 Critérios de aceite
+Todos os valores pertencem ao intervalo e não estão na lista de exclusões.
+Sem repetição, não existem duplicados.
+Com repetição, duplicados são permitidos.
+Quantidade impossível gera mensagem explicativa e não executa.
+Resultado pode ser copiado e salvo no histórico.
+8. Formação de equipes, duplas e trios
+8.1 Modos de divisão
+Definir número de equipes: distribuir participantes em N grupos.
+Definir pessoas por equipe: criar o número necessário de grupos e tratar sobra.
+Duplas: agrupar em pares; se número ímpar, criar um trio ou deixar uma pessoa como reserva, conforme escolha.
+Trios: agrupar em grupos de três e tratar sobras de um ou dois.
+Distribuição equilibrada: diferença de integrantes entre grupos nunca superior a um, quando não houver restrições.
+8.2 Restrições
+Regra
+Comportamento
+Devem ficar juntos
+Participantes formam uma unidade de alocação
+Não podem ficar juntos
+Impedir que participantes indicados compartilhem equipe
+Capitão
+Selecionar um membro de cada equipe depois da divisão
+Equipes nomeadas
+Permitir nome e cor por equipe
+Participante reserva
+Manter fora dos grupos e exibir em seção separada
+Restrições combinadas podem tornar a divisão impossível. O sistema deve validar, tentar uma solução dentro de limite computacional e explicar quando não houver solução encontrada. Não afirmar que é matematicamente impossível se apenas o limite de busca foi atingido.
+8.3 Critérios de aceite
+Todos os participantes elegíveis aparecem exatamente uma vez.
+Equipes ficam equilibradas quando possível.
+Restrições de separação e união são respeitadas quando uma solução válida existir.
+Participantes reservas não aparecem nas equipes.
+Repetir divisão cria nova distribuição.
+9. Sim/não, cartas, desafios, letras e tarefas
+9.1 Sim ou não
+Oferecer padrão “Sim” e “Não”.
+Permitir editar respostas e adicionar opções, tornando a ferramenta um seletor simples.
+Exigir pelo menos duas opções.
+Exibir animação curta e resultado textual.
+Não apresentar a ferramenta como aconselhamento para decisões médicas, financeiras, jurídicas ou de segurança.
+9.2 Sorteio de cartas
+Usuário cria baralho com título e cartas.
+Cada carta contém texto obrigatório e imagem opcional.
+Configurar quantidade de cartas a revelar.
+Configurar remoção após retirada ou reposição.
+Embaralhar usando o motor central.
+Compartilhar resultado sem expor conteúdo privado por padrão.
+9.3 Gerador de desafios
+Disponibilizar conjuntos editáveis e modelos locais. Cada desafio deve ser apropriado ao público geral, sem incentivar risco, humilhação, violência, consumo de substâncias ou exposição de dados pessoais. Permitir pular e gerar outro.
+9.4 Gerador de letras
+Selecionar alfabeto português A–Z, com opção de incluir ou excluir letras específicas.
+Definir quantidade de letras.
+Permitir ou impedir repetição.
+Exibir e copiar resultado.
+9.5 Distribuição de tarefas
+Cadastrar pessoas e tarefas.
+Selecionar distribuição equilibrada ou aleatória simples.
+Definir máximo de tarefas por pessoa.
+Permitir tarefas não atribuídas quando a quantidade de pessoas for insuficiente.
+Não prometer equilíbrio de esforço se tarefas não tiverem pesos ou duração cadastrados.
+Permitir repetir distribuição e exportar o resumo.
+10. Modelos, favoritos e personalização
+10.1 Biblioteca de modelos
+Categoria
+Modelos iniciais
+Alimentação
+O que comer, escolha de restaurante, sobremesa
+Educação
+Sortear aluno, pergunta, ordem de apresentação, equipe
+Trabalho
+Responsável, tarefa, ordem de execução
+Eventos
+Brinde, dinâmica, atividade, ordem de participação
+Família
+Filme, passeio, atividade de fim de semana
+Entretenimento
+Desafio leve, tema, jogo, personagem
+10.2 Regras de modelos
+Modelos são dados-base incluídos no aplicativo; ao usar, criar uma cópia editável.
+Atualizações de catálogo não devem sobrescrever cópias personalizadas.
+Favoritar e desfavoritar sem login.
+Pesquisar por nome, descrição e tags.
+Modelos e personalização são gratuitos e não podem ter bloqueio por plano.
+10.3 Temas
+Incluir temas predefinidos (claro, escuro, pastel, vibrante, alto contraste) e personalização de cor da roleta. A mudança visual não pode afetar a probabilidade ou a seleção.
+11. Histórico, favoritos e dados locais
+11.1 Registro de atividade
+Campo
+Descrição
+id
+UUID gerado localmente
+type
+wheel, name_draw, number_draw, teams, pairs, tasks, decision etc.
+title
+Nome informado ou título gerado
+createdAt
+Data/hora ISO
+configSnapshot
+Cópia das configurações usadas
+inputSnapshot
+Dados necessários para repetir, com proteção local
+result
+Resultado produzido
+algorithmVersion
+Versão do motor de aleatoriedade
+isFavorite
+Indica favorito, quando aplicável
+11.2 Operações
+Listar por data decrescente.
+Pesquisar por título.
+Filtrar por tipo.
+Abrir detalhes.
+Duplicar configuração.
+Repetir execução com nova aleatoriedade.
+Excluir um registro.
+Limpar histórico com confirmação.
+Exportar dados locais em formato legível, quando a funcionalidade de exportação estiver incluída.
+11.3 Limites e privacidade
+Não impor limite artificial de histórico no produto final. Como o armazenamento é local, monitorar quota e oferecer aviso antes de falha de persistência. A pessoa deve poder apagar dados e entender que limpar dados do navegador ou desinstalar o app pode apagar o histórico, caso não exista backup.
+11.4 Estratégia de armazenamento
+Web: IndexedDB para entidades estruturadas e listas; localStorage apenas para preferências pequenas não críticas.
+Android: encapsular acesso a dados locais por interface de repositório; usar IndexedDB no WebView ou solução nativa testada, sem acoplar módulos à implementação.
+Implementar migrações de esquema e versão dos dados.
+Tratar quota excedida, corrupção e falha de escrita.
+Não registrar conteúdo de listas em logs de diagnóstico.
+12. Compartilhamento e exportação
+12.1 Cartão de resultado
+Gerar cartão visual com nome da atividade, resultado, data opcional e marca Sorteia. A imagem deve ter dimensões adequadas para compartilhamento em redes sociais e ser legível em telas pequenas.
+12.2 Compartilhamento nativo
+Utilizar Web Share API quando disponível.
+Fallback: copiar texto ou baixar imagem.
+Informar claramente quando o navegador não suportar compartilhamento.
+Não publicar automaticamente em redes sociais.
+Não incluir lista completa de participantes sem escolha explícita do usuário.
+12.3 Exportação
+No MVP, priorizar copiar resultado e compartilhar cartão PNG. CSV pode ser oferecido para listas e equipes após validação. PDF é uma melhoria posterior e não deve bloquear o lançamento.
+13. Publicidade — especificação operacional
+13.1 Princípios
+Publicidade é a única fonte de receita.
+Não existem assinaturas, compras, créditos, paywall ou recursos pagos.
+Anúncios não podem alterar resultados, probabilidade, listas ou acesso às ferramentas.
+Não mostrar anúncio sobreposto ao ponteiro, botão Girar, resultado ou controles de participantes.
+Não incentivar clique nem disfarçar publicidade como conteúdo editorial.
+Respeitar regras de idade, consentimento, políticas de inventário e requisitos de cada rede.
+13.2 Matriz de posicionamento
+Tela
+Formato permitido
+Regra
+Início
+Banner adaptativo
+Espaço reservado; não cobrir atalhos
+Catálogo
+Nativo identificado
+Separado visualmente dos cartões de ferramenta
+Editor de roleta
+Banner opcional
+Não ocupar espaço de edição crítica
+Roleta em execução
+Nenhum
+Bloqueio absoluto de anúncio
+Resultado imediato
+Nenhum antes/depois imediato
+Resultado tem prioridade
+Histórico
+Banner discreto
+Não intercalar de forma enganosa
+Configurações
+Nenhum por padrão
+Evitar publicidade em área sensível
+Vídeo recompensado
+Somente opcional
+Benefício cosmético/experiencial não essencial
+13.3 Intersticial e frequência
+Intersticiais só poderão aparecer em transições naturais, nunca no meio de uma tarefa. A implementação deve possuir frequency cap centralizado, com valores configuráveis remotamente ou por configuração de build. Sugestão inicial para teste: não exibir antes de três atividades concluídas na sessão e impor intervalo mínimo de alguns minutos entre anúncios. Esses valores devem ser ajustados com dados de abandono, política da rede e qualidade da experiência.
+Não exibir na primeira abertura.
+Não exibir imediatamente após o usuário clicar em Girar.
+Não exibir antes de o resultado ser mostrado.
+Não exibir se o usuário estiver em fluxo de edição ou importação.
+Se o anúncio não carregar, continuar a experiência normalmente.
+Registrar impressão apenas quando a rede confirmar a impressão, conforme SDK.
+13.4 Vídeo recompensado
+Opcional. O benefício pode ser um efeito visual temporário, uma animação especial ou um tema cosmético por tempo limitado. Nunca oferecer maior probabilidade de vencer, participantes extras, resultado privilegiado ou acesso a sorteio condicionado ao anúncio. O usuário deve saber qual benefício receberá antes de iniciar.
+13.5 Web e Android
+Android: avaliar Google AdMob e cumprir requisitos de SDK, consentimento e política de anúncios.
+Web: avaliar Google AdSense ou solução compatível; aprovação, inventário e formatos dependem de elegibilidade do site.
+Não reutilizar SDK mobile na Web sem suporte oficial.
+Separar adaptadores de publicidade por plataforma.
+Desenvolver modo sem anúncios para testes locais e ambientes de desenvolvimento.
+Publicidade deve falhar de forma isolada: falha do SDK nunca deve quebrar a ferramenta.
+13.6 Consentimento e privacidade publicitária
+Implementar mecanismo de consentimento aplicável às regiões e redes utilizadas.
+Oferecer escolhas compreensíveis sobre publicidade personalizada quando exigido.
+Não carregar SDKs de publicidade que dependam de consentimento antes de resolver o estado aplicável.
+Documentar dados coletados por cada SDK e finalidade.
+Manter política de privacidade e canal de solicitações.
+Não enviar nomes, participantes, resultados ou conteúdo de roletas à rede de anúncios.
+13.7 Eventos publicitários
+Evento
+Quando registrar
+Propriedades permitidas
+ad_request
+Solicitação de anúncio
+placement, platform, format
+ad_loaded
+Anúncio carregado
+placement, format
+ad_impression
+Impressão confirmada
+placement, format, network
+ad_clicked
+Clique reportado pelo SDK
+placement, format
+ad_failed
+Falha
+placement, error_category
+rewarded_started
+Vídeo iniciado
+placement
+rewarded_completed
+Vídeo concluído
+placement, reward_type
+14. Motor de aleatoriedade e integridade
+14.1 Requisitos técnicos
+Utilizar fonte de aleatoriedade apropriada à plataforma, preferencialmente API criptograficamente segura (Web Crypto getRandomValues no navegador e fonte segura equivalente no runtime nativo).
+Não utilizar Math.random para sorteios cuja integridade seja requisito do produto.
+Implementar função de abstração RandomSource para permitir testes determinísticos com fonte simulada.
+Utilizar amostragem sem viés de módulo (rejection sampling ou método equivalente) ao converter bytes em inteiros dentro de intervalos.
+Usar algoritmo Fisher–Yates com fonte sem viés para embaralhamento.
+Na seleção ponderada, evitar erros de ponto flutuante e validar pesos.
+Separar o motor do framework de interface.
+Versionar o algoritmo e testar casos extremos.
+14.2 Seleção ponderada
+A probabilidade teórica de uma opção i é peso_i dividido pela soma dos pesos. A implementação deve somar pesos válidos, gerar um valor aleatório uniforme no intervalo total e localizar o intervalo acumulado correspondente. Deve-se documentar a precisão numérica, o limite de peso e o comportamento quando a soma for muito grande.
+14.3 Integridade e limites das promessas
+O histórico local é um registro de conveniência, não prova independente de imparcialidade. Para uma versão futura de verificabilidade pública, implementar compromisso criptográfico dos dados e procedimento de revelação/verificação, com documentação clara. Não anunciar “sorteio auditado”, “certificado” ou “impossível de manipular” sem mecanismo e auditoria que sustentem a afirmação.
+14.4 Testes estatísticos
+Testes unitários para intervalos, limites e ausência de viés conhecido.
+Testes de distribuição em grandes amostras como alerta de regressão, não como prova matemática.
+Testar pesos 1:1, 1:3, 1:9 e pesos decimais.
+Testar listas com um item, dois itens, listas grandes e itens inativos.
+Testar reprodutibilidade apenas com fonte determinística de teste.
+15. Arquitetura de software
+15.1 Stack recomendada
+Camada
+Tecnologia sugerida
+Observações
+Linguagem
+TypeScript
+Tipagem estrita
+Web
+React + Next.js
+Aplicação responsiva; avaliar necessidade de SSR para SEO
+Estilo
+Tailwind CSS + design tokens
+Componentes reutilizáveis
+Animação
+Framer Motion ou CSS
+Respeitar redução de movimento
+Persistência
+IndexedDB
+Repositório isolado por interface
+Mobile
+Capacitor
+Empacotamento Android; validar plugins e políticas
+Publicidade Android
+AdMob
+SDK oficial e consentimento
+Publicidade Web
+AdSense ou alternativa elegível
+Integração distinta do mobile
+Analytics
+PostHog ou analytics próprio mínimo
+Evitar conteúdo pessoal
+Backend futuro
+Supabase
+Somente quando conta/sincronização forem aprovadas
+Testes
+Vitest, Testing Library, Playwright
+Unitário, componente e E2E
+Qualidade
+ESLint, Prettier, TypeScript strict
+CI obrigatório
+15.2 Estrutura de pastas sugerida
+src/  app/    (public)/      page.tsx      ferramentas/      roletas/      sorteios/      equipes/      historico/      favoritos/      configuracoes/    layout.tsx  components/    ui/    navigation/    ads/    wheel/    participants/    results/    forms/  features/    wheel/      components/      domain/      application/      infrastructure/    name-draw/    number-draw/    teams/    pairs/    decisions/    tasks/    templates/    history/    sharing/  core/    random/    validation/    storage/    analytics/    advertising/    accessibility/  data/    templates/  types/  tests/
+15.3 Separação de responsabilidades
+Domain: entidades, regras de negócio e validações puras.
+Application: casos de uso como CreateWheel, SpinWheel, DrawWinners e GenerateTeams.
+Infrastructure: IndexedDB, arquivos, SDKs e integrações externas.
+Presentation: telas, componentes e estado visual.
+Advertising: adaptadores separados, sem dependência do motor de sorteio.
+Analytics: eventos de produto sem nomes, listas ou resultados identificáveis.
+15.4 Interfaces de domínio
+Criar interfaces como RandomSource, ActivityRepository, TemplateRepository, ShareService, AdProvider e AnalyticsProvider. A aplicação deve depender das interfaces, não de SDKs concretos. Isso facilita testes, troca de fornecedor e execução offline.
+16. Modelo de dados
+16.1 Entidades locais
+Entidade
+Campos principais
+Observações
+Activity
+id, type, title, createdAt, updatedAt, config, inputSnapshot, result, algorithmVersion
+Registro de execução ou atividade
+Wheel
+id, name, options, settings, createdAt, updatedAt
+Definição reutilizável da roleta
+WheelOption
+id, label, color, icon, imageRef, weight, active, order
+Opção individual
+Participant
+id, label, metadata opcional
+Não incluir metadados sensíveis
+Template
+id, title, category, description, payload, tags, version
+Catálogo inicial
+Preference
+key, value, updatedAt
+Tema, som, animação, privacidade
+Favorite
+id, entityType, entityId, createdAt
+Referência a ferramenta/modelo
+AdConsent
+region, status, updatedAt, policyVersion
+Somente dados necessários ao consentimento
+16.2 Regras de persistência
+Usar UUID para identificadores.
+Armazenar datas em ISO 8601 UTC e apresentar no fuso local.
+Versionar o esquema local.
+Implementar migrações idempotentes.
+Não salvar imagem em base64 diretamente em registros grandes; utilizar Blob/armazenamento apropriado.
+Não persistir tokens ou dados sensíveis em localStorage.
+Oferecer exportação/apagamento dos dados locais quando aplicável.
+16.3 Backend futuro — não obrigatório no MVP
+Se for aprovada sincronização, avaliar Supabase com autenticação, Postgres e Storage. O desenho futuro poderá incluir profiles, wheels, activities, share_links e sync metadata. Aplicar Row Level Security para que cada usuário acesse somente seus próprios dados. Não criar tabelas ou serviços remotos antes de existir requisito real de sincronização.
+17. Contratos de casos de uso
+Caso de uso
+Entrada
+Saída
+Falhas esperadas
+CreateWheel
+Nome, opções, configuração
+Wheel persistida
+Nome inválido, menos de 2 opções
+SpinWheel
+Wheel ID ou snapshot válido
+Option vencedora + execution ID
+Sem opções ativas, pesos inválidos
+DrawWinners
+Participantes, winners, alternates
+Ganhadores e suplentes
+Lista insuficiente
+GenerateNumbers
+Min, max, count, exclusions, repeat
+Lista numérica
+Intervalo inválido ou quantidade impossível
+GenerateTeams
+Participantes, modo, restrições
+Grupos
+Restrições sem solução encontrada
+SaveActivity
+Snapshot e resultado
+Activity ID
+Falha de armazenamento
+RepeatActivity
+Activity ID
+Nova execução
+Registro inexistente ou incompatível
+ShareResult
+Resultado e formato
+Arquivo/texto/ação de compartilhamento
+API indisponível ou permissão negada
+18. Segurança, privacidade e conformidade
+18.1 LGPD e dados de participantes
+Definir finalidade e base legal aplicável para qualquer dado pessoal tratado.
+Coletar o mínimo necessário; nome pode ser dado pessoal dependendo do contexto.
+Preferir processamento local e evitar upload de listas.
+Não incluir listas em ferramentas de analytics, crash reports ou logs.
+Permitir apagar histórico e dados armazenados localmente.
+Documentar retenção, compartilhamento e fornecedores.
+Disponibilizar política de privacidade e canal de contato.
+18.2 Publicidade e menores
+Como professores e crianças podem utilizar o aplicativo, definir política de público-alvo com cuidado. Não direcionar publicidade comportamental a crianças. Avaliar classificação etária, configuração de anúncios adequados, consentimento parental quando aplicável e políticas da loja/rede. Não coletar idade ou dados de criança sem necessidade.
+18.3 Sorteios promocionais no Brasil
+O produto é uma ferramenta de seleção aleatória, não uma plataforma de rifas ou apostas. Promoções comerciais com distribuição gratuita de prêmios podem exigir autorização e cumprimento de regras específicas no Brasil. O aplicativo deve exibir aviso de que a ferramenta não substitui autorização, regulamento ou orientação jurídica. Não permitir venda de números, bilhetes, chances ou apostas no MVP. Antes de desenvolver funcionalidades promocionais profissionais, obter análise jurídica especializada.
+18.4 Segurança técnica
+Aplicar Content Security Policy e proteção contra XSS.
+Sanitizar texto renderizado e validar arquivos importados.
+Limitar tamanho e tipo de arquivo.
+Não executar conteúdo HTML ou script importado.
+Proteger painel administrativo com autenticação forte se implementado.
+Atualizar dependências e revisar vulnerabilidades.
+Não confiar em dados do cliente como prova de resultado oficial.
+19. Analytics e métricas de produto
+19.1 Eventos
+Evento
+Momento
+Propriedades não sensíveis
+app_open
+Abertura
+platform, app_version, source
+tool_open
+Ferramenta aberta
+tool_type
+activity_created
+Atividade criada
+activity_type
+activity_completed
+Atividade concluída
+activity_type, duration_bucket
+wheel_spin
+Giro executado
+option_count_bucket, weighted
+result_shared
+Compartilhamento iniciado/concluído
+share_format
+template_used
+Modelo usado
+template_category
+history_open
+Histórico aberto
+item_count_bucket
+ad_impression
+Impressão publicitária
+placement, format, platform
+app_error
+Erro não sensível
+error_category, app_version
+Não enviar nomes, conteúdo de listas, opções privadas, resultados identificáveis, e-mail ou dados sensíveis para analytics. Usar agregação e retenção limitada.
+19.2 KPIs
+Indicador
+Definição
+Uso
+DAU
+Usuários ativos por dia
+Acompanhar uso diário
+MAU
+Usuários ativos por mês
+Medir alcance
+D1/D7/D30
+Retenção por coorte
+Avaliar retorno
+Sessões/usuário
+Sessões divididas por usuários
+Frequência
+Atividades concluídas
+Execuções finalizadas
+Valor entregue
+Share rate
+Compartilhamentos / atividades concluídas
+Viralização
+Ad impressions
+Impressões válidas
+Monetização
+eCPM
+Receita / impressões × 1000
+Eficiência publicitária
+Ad fill rate
+Anúncios preenchidos / solicitações elegíveis
+Inventário
+Crash-free sessions
+Sessões sem falha
+Estabilidade
+19.3 Metas iniciais
+Metas são hipóteses a validar, não garantias: retenção D1 > 30%, D7 > 15%, D30 > 8%; zero defeitos conhecidos que alterem resultado; conclusão do primeiro sorteio em menos de 15 segundos; crescimento de compartilhamentos sem aumento relevante de abandono. Revisar metas após 30 dias de dados reais.
+20. Testes e qualidade
+20.1 Pirâmide de testes
+Unitários: motor aleatório, validações, pesos, amostragem e geometria da roleta.
+Componentes: formulários, listas, modais, estados e acessibilidade.
+Integração: repositório local, importação, histórico e compartilhamento.
+E2E: fluxos completos em mobile e desktop.
+Manual: roleta em aparelhos reais, offline, retomada após suspensão e falhas de anúncios.
+20.2 Matriz de cenários críticos
+Área
+Cenário
+Resultado esperado
+Roleta
+0 ou 1 opção ativa
+Giro bloqueado com explicação
+Roleta
+Peso zero/negativo/NaN
+Validação impede salvar/girar
+Roleta
+Editar durante giro
+Edição bloqueada
+Nomes
+Lista vazia
+Sorteio bloqueado
+Nomes
+Duplicados permitidos
+Entradas tratadas individualmente
+Nomes
+Ganhadores > elegíveis
+Mensagem e bloqueio
+Números
+Min > max
+Validação
+Números
+Sem repetição e quantidade excessiva
+Validação
+Equipes
+30 pessoas/5 equipes
+5 grupos de 6
+Equipes
+31 pessoas/5 equipes
+Grupos de 6 e 7
+Histórico
+Falha de quota
+Aviso sem perda silenciosa
+Publicidade
+Anúncio falha
+Ferramenta continua funcionando
+Publicidade
+Usuário gira roleta
+Nenhum anúncio interrompe o giro
+Offline
+Sem rede
+Ferramentas locais funcionam
+Acessibilidade
+Redução de movimento
+Animação reduzida
+20.3 Definição de pronto
+Requisitos funcionais implementados.
+Critérios de aceite aprovados.
+Testes unitários e E2E relevantes passando.
+Sem erros críticos de TypeScript/lint.
+Layout responsivo validado.
+Estados de erro e vazio implementados.
+Eventos de analytics revisados para privacidade.
+Publicidade testada em ambiente de teste e nunca interfere na tarefa.
+Documentação e instruções de execução atualizadas.
+21. Plano de desenvolvimento por sprints
+Sprint
+Entregas
+Saída verificável
+0 — Fundação
+Repositório, setup, lint, CI, design tokens, roteamento
+Aplicação inicia e pipeline passa
+1 — Navegação
+Layout, home, catálogo, configurações
+Navegação completa sem funcionalidades avançadas
+2 — Motor aleatório
+RandomSource, amostragem, Fisher–Yates, testes
+Biblioteca isolada e coberta por testes
+3 — Roleta
+Editor, geometria, animação, persistência
+Roleta funcional e salva
+4 — Sorteios
+Nomes, números, resultados
+Fluxos validados
+5 — Grupos
+Equipes, duplas, trios e tarefas
+Distribuições válidas
+6 — Histórico
+IndexedDB, favoritos, duplicar e repetir
+Dados persistem após reinício
+7 — Compartilhamento
+Cartão, copiar, Web Share API
+Resultado compartilhável
+8 — Publicidade
+Adaptadores Web/Android, consentimento, frequency cap
+Anúncios testados sem afetar fluxos
+9 — Qualidade
+Acessibilidade, performance, E2E, offline
+Release candidate
+10 — Publicação
+PWA/hosting, Android, políticas e monitoramento
+Versão publicada
+A duração de cada sprint depende da equipe e da experiência técnica. Não iniciar integração de anúncios antes de os fluxos principais estarem estáveis, mas manter os espaços de layout e os adaptadores previstos desde o início.
+22. Critérios de publicação
+22.1 Web
+Domínio e HTTPS configurados.
+Metadados, ícones, manifest e experiência PWA revisados.
+SEO técnico das páginas públicas de ferramentas.
+Política de privacidade e termos publicados.
+Configuração de consentimento publicitário.
+Verificação de performance e acessibilidade.
+Analytics sem dados pessoais indevidos.
+AdSense somente após atender aos requisitos e aprovação aplicáveis.
+22.2 Android
+Aplicação Capacitor testada em aparelhos e versões Android suportadas.
+Ícone, nome, splash screen e permissões mínimas.
+Política de privacidade acessível na loja e dentro do app.
+SDK de anúncios e consentimento compatíveis com políticas vigentes.
+Classificação etária e público-alvo configurados corretamente.
+Testes de suspensão/retomada, offline e rotação.
+Build de produção assinado e processo de atualização documentado.
+23. Riscos e mitigação
+Risco
+Impacto
+Mitigação
+Excesso de anúncios
+Abandono e avaliações ruins
+Frequency cap, teste A/B responsável e anúncios fora dos fluxos críticos
+Baixa receita por usuário
+Modelo não se sustenta
+SEO, distribuição orgânica, retenção e otimização de formatos
+Dependência de rede de anúncios
+Queda de receita ou bloqueio
+Abstração de provider e conformidade rigorosa
+Perda de histórico local
+Insatisfação
+Exportação, avisos, migrações e backup futuro opcional
+Resultado visual incorreto
+Perda de confiança
+Motor independente e testes de geometria
+Restrições de sorteio promocional
+Risco jurídico
+Limitar uso, avisos e revisão jurídica
+Uso por menores
+Risco de privacidade/publicidade
+Configuração apropriada e minimização de dados
+Escopo excessivo
+Atraso de lançamento
+P0/P1/P2 e congelamento de escopo do MVP
+Dependência de IA para código
+Defeitos e inconsistência
+Revisão humana, testes e contratos de domínio
+24. Decisões de produto consolidadas
+Decisão
+Definição final
+Modelo comercial
+Gratuito para todos
+Monetização
+Somente anúncios
+Assinaturas
+Não existirão
+Compras internas
+Não existirão
+Créditos
+Não existirão
+Funcionalidades pagas
+Não existirão
+Cadastro
+Não obrigatório no MVP
+Armazenamento
+Local-first
+Plataforma inicial
+Web responsiva + Android
+iOS
+Posterior, após validação
+Ferramentas centrais
+Roleta, nomes, números, equipes, duplas, decisões
+Publicidade
+Banner, nativo, intersticial controlado e rewarded opcional
+Anúncios durante sorteio
+Proibidos
+Dados de participantes
+Não enviar a publicidade/analytics
+Rifas e apostas
+Fora do escopo
+25. Instruções para desenvolvimento com IA
+As instruções a seguir devem ser fornecidas ao agente de desenvolvimento como regras permanentes do projeto:
+Leia este documento antes de implementar qualquer funcionalidade.
+Não invente planos pagos, assinatura, créditos, paywall ou compra interna.
+Todas as funcionalidades descritas como incluídas devem ser gratuitas.
+Não implemente publicidade dentro do fluxo de giro, seleção ou exibição imediata do resultado.
+Não use Math.random como fonte de sorteio de produção; use uma fonte criptograficamente segura e uma abstração testável.
+Não misture o motor aleatório com componentes React ou animações.
+Não envie participantes, opções, listas ou resultados para analytics ou redes publicitárias.
+Não crie backend ou autenticação no MVP sem requisito aprovado.
+Implemente testes junto com cada funcionalidade.
+Não marque uma tarefa como concluída sem executar testes e revisar os critérios de aceite.
+Não altere decisões consolidadas sem registrar a justificativa e solicitar aprovação.
+Priorize simplicidade, acessibilidade, desempenho e funcionamento offline.
+25.1 Prompt inicial para o agente de desenvolvimento
+Você é o engenheiro de software responsável por implementar o Sorteia. Use a Especificação Completa do Produto como fonte de verdade. O produto é 100% gratuito e monetizado exclusivamente por publicidade. É proibido implementar assinatura, plano Premium, créditos, compras internas, paywall ou bloqueio pago de recursos.Trabalhe em etapas pequenas. Primeiro inspecione o repositório e apresente a arquitetura existente; não sobrescreva código sem entender o projeto. Em seguida, proponha um plano de implementação alinhado às sprints do documento. Para cada etapa, implemente regras de negócio, interface, estados de erro/vazio/carregamento, acessibilidade e testes. Separe domínio, aplicação, infraestrutura e apresentação. O motor de aleatoriedade deve ser independente da interface e utilizar fonte criptograficamente segura em produção. Publicidade deve ser isolada por adaptadores de plataforma e nunca interromper o giro, seleção ou resultado. Não envie dados de participantes a analytics ou redes de anúncios. Não invente requisitos. Ao final de cada etapa, informe arquivos alterados, decisões tomadas, testes executados, resultados e pendências.
+26. Checklist de aceite do MVP
+☐ Aplicação inicia sem erros e navega em mobile e desktop.
+☐ Usuário consegue abrir e executar roleta com duas ou mais opções.
+☐ Roleta permite criar, editar, salvar e reutilizar opções.
+☐ Roleta suporta pesos e validações.
+☐ Sorteio de nomes suporta ganhadores e suplentes.
+☐ Gerador de números respeita intervalo, exclusões e repetição.
+☐ Gerador de equipes produz grupos equilibrados.
+☐ Duplas e trios tratam sobras de forma explícita.
+☐ Sim/não e geradores adicionais funcionam.
+☐ Histórico local persiste e permite repetir/excluir.
+☐ Favoritos funcionam.
+☐ Compartilhamento tem fallback.
+☐ Ferramentas essenciais funcionam offline após carregamento/instalação.
+☐ Publicidade não aparece durante giro, seleção ou resultado.
+☐ Consentimento e política de privacidade estão implementados conforme aplicável.
+☐ Não existe assinatura, compra, crédito ou recurso pago.
+☐ Testes automatizados cobrem regras críticas.
+☐ Não há vazamento de listas/participantes em analytics ou publicidade.
+☐ Documentação de instalação, execução, build e publicação está atualizada.
+27. Glossário
+Termo
+Significado
+DAU
+Daily Active Users — usuários ativos diários
+MAU
+Monthly Active Users — usuários ativos mensais
+eCPM
+Receita estimada por mil impressões de anúncio
+Fill rate
+Percentual de solicitações elegíveis que recebem anúncio
+Frequency cap
+Limite de frequência de exibição publicitária
+Intersticial
+Anúncio em tela cheia entre etapas naturais
+Nativo
+Anúncio integrado visualmente ao fluxo, identificado como publicidade
+Rewarded
+Anúncio em vídeo voluntário com benefício informado
+IndexedDB
+Banco de dados local do navegador
+PWA
+Progressive Web App
+Capacitor
+Ferramenta para empacotar aplicação web em app nativo
+RLS
+Row Level Security — política de acesso por linha no banco
+28. Encerramento
+Este documento consolida o escopo funcional, técnico, comercial e operacional do Sorteia. A primeira entrega deve priorizar uma experiência confiável e rápida para roletas, sorteios de nomes e números, equipes e decisões. A publicidade é a única fonte de monetização e deve permanecer subordinada à experiência do usuário.
+O sucesso do produto dependerá menos da quantidade de ferramentas lançadas de uma só vez e mais da confiabilidade do motor de sorteio, facilidade de uso, retenção, distribuição orgânica, controle de publicidade e disciplina de escopo.
+Próximo passo recomendado: iniciar a Sprint 0, preparar o repositório, configurar a base técnica e implementar o motor aleatório com testes antes de construir a animação da roleta.

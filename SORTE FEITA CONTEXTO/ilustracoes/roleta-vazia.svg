@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 304 304" role="img" aria-label="Roleta"><circle cx="150" cy="150" r="148" fill="#FFFFFF" stroke="#8FC1C9"/>
+<g stroke="#F3EDE2" stroke-width="3" stroke-linejoin="round">
+<path d="M150 150 L150 10 A140 140 0 0 1 271.2 80 Z" fill="#0E3B43"/>
+<path d="M150 150 L271.2 80 A140 140 0 0 1 271.2 220 Z" fill="#1F7A8C"/>
+<path d="M150 150 L271.2 220 A140 140 0 0 1 150 290 Z" fill="#8FC1C9"/>
+<path d="M150 150 L150 290 A140 140 0 0 1 28.8 220 Z" fill="#0E3B43"/>
+<path d="M150 150 L28.8 220 A140 140 0 0 1 28.8 80 Z" fill="#1F7A8C"/>
+<path d="M150 150 L28.8 80 A140 140 0 0 1 150 10 Z" fill="#8FC1C9"/></g>
+<circle cx="150" cy="150" r="26" fill="#F3EDE2" stroke="#0E3B43" stroke-width="2"/><circle cx="150" cy="150" r="8" fill="#0E3B43"/></svg>
