@@ -27,13 +27,28 @@ android {
         // flag during build.
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        // AdMob App ID: ID de teste publico por padrao; producao via -PADMOB_APP_ID=... ou ~/.gradle/gradle.properties.
+        manifestPlaceholders["admobAppId"] = (project.findProperty("ADMOB_APP_ID") as String?) ?: "ca-app-pub-3940256099942544~3347511713"
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            // Assinatura de release via android/key.properties (fora do Git).
+            // Sem ele, usa a chave debug apenas para testes locais.
+            val keyProps = java.util.Properties()
+            val keyFile = rootProject.file("key.properties")
+            if (keyFile.exists()) {
+                keyFile.inputStream().use { keyProps.load(it) }
+                signingConfigs.create("release") {
+                    keyAlias = keyProps.getProperty("keyAlias")
+                    keyPassword = keyProps.getProperty("keyPassword")
+                    storeFile = file(keyProps.getProperty("storeFile"))
+                    storePassword = keyProps.getProperty("storePassword")
+                }
+                signingConfig = signingConfigs.getByName("release")
+            } else {
+                signingConfig = signingConfigs.getByName("debug")
+            }
         }
     }
 }

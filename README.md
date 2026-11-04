@@ -11,7 +11,7 @@ Repositório Oficial: [https://github.com/feitolabs/Sorte-Feita](https://github.
 O **Sorte Feita** é uma plataforma completa e gratuita para criar e executar roletas, sorteios, divisões de grupos e decisões aleatórias. Desenvolvido para funcionar offline em sua plenitude, com total responsividade para **Android**, **iOS**, Web e Desktop.
 
 ### 🛡️ Princípios Fundamentais
-- **100% Gratuito:** Sem planos pagos, assinaturas, compras internas ou moedas virtuais.
+- **100% Gratuito:** Todas as ferramentas são grátis. Única compra opcional (Google Play Billing): *Remover anúncios* (pagamento único, não consumível) — nunca bloqueia ferramentas nem altera resultados.
 - **Sem Cadastro Obrigatório:** Pronto para uso imediato em qualquer dispositivo.
 - **Privacidade & Local-First (LGPD):** Nomes e listas de participantes ficam armazenados exclusivamente no dispositivo do usuário (`localStorage`), sem envio de listas a terceiros ou publicidade.
 - **Aleatoriedade Criptograficamente Segura (CSPRNG):** Uso de amostragem sem viés (rejection sampling), Fisher-Yates shuffle e seleção ponderada rigorosa, sem algoritmos ingênuos ou `Math.random`.
@@ -138,3 +138,21 @@ flutter run
 - O arquivo `.env` está devidamente listado no `.gitignore`.
 - Variáveis são gerenciadas via `pydantic-settings` no Python e `shared_preferences` no Flutter.
 - Código 100% auditado por testes unitários e integrados.
+
+
+---
+
+## 📢 Publicidade (AdMob) e Billing (Google Play)
+
+- **Banners adaptativos** no Início, Catálogo e Histórico; **intersticial** só em transição natural (voltar ao Início), com frequency cap (`AD_MIN_ACTIVITIES`=3 atividades e `AD_MIN_INTERVAL_SECONDS`=300). **Nunca** durante o giro nem junto ao resultado.
+- **Consentimento (UMP)** resolvido antes de carregar o SDK; opção *Preferências de anúncios* nos Ajustes.
+- **Falha isolada:** erro de SDK/rede nunca quebra uma ferramenta. Nenhum nome/lista/resultado é enviado à rede.
+- **Remover anúncios:** produto in-app `remove_ads` (não consumível) via `in_app_purchase`; estado salvo localmente; botão *Restaurar compra*.
+- Por padrão o app usa **IDs de TESTE do Google** (sem segredos no código). Em produção:
+
+```bash
+flutter build appbundle --release   --dart-define=ADMOB_BANNER_ANDROID=ca-app-pub-XXXX/YYYY   --dart-define=ADMOB_INTERSTITIAL_ANDROID=ca-app-pub-XXXX/ZZZZ   --dart-define=IAP_REMOVE_ADS_ID=remove_ads   -PADMOB_APP_ID=ca-app-pub-XXXX~WWWW
+```
+- `--dart-define=ADS_ENABLED=false` desliga toda a publicidade (modo dev).
+- Assinatura Android: crie `frontend/android/key.properties` (ignorado pelo Git) com `keyAlias`, `keyPassword`, `storeFile`, `storePassword`.
+- **Pendências manuais (fora do código):** criar app/unidades no AdMob, criar o produto `remove_ads` no Play Console, trocar o App ID do iOS em `Info.plist`, publicar política de privacidade.
