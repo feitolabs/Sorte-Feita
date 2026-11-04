@@ -5,6 +5,9 @@ from app.core.config import settings
 from app.models.schemas import HistoryItem, WheelModel
 
 
+MAX_ACTIVITIES = 500
+
+
 class LocalStorageService:
     def __init__(self, storage_dir: Optional[str] = None):
         self.storage_dir = storage_dir or settings.DATA_STORAGE_DIR
@@ -40,6 +43,7 @@ class LocalStorageService:
         item_dict = item.model_dump()
         # Add to head of list (descending chronological order)
         activities.insert(0, item_dict)
+        del activities[MAX_ACTIVITIES:]  # histórico limitado
         self._write_json_file(self.activities_file, activities)
         return item_dict
 

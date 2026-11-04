@@ -97,8 +97,9 @@ class RandomEngineService:
             seen = set()
             eligible = []
             for name in cleaned:
-                if name not in seen:
-                    seen.add(name)
+                key = name.casefold()  # igual ao app: Ana == ana
+                if key not in seen:
+                    seen.add(key)
                     eligible.append(name)
             duplicates_removed = initial_count - len(eligible)
 

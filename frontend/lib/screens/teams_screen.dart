@@ -85,7 +85,10 @@ class _TeamsScreenState extends State<TeamsScreen> {
       final members = shuffled.sublist(startIdx, startIdx + size);
       startIdx += size;
 
-      final theme = _presetThemes[i % _presetThemes.length];
+      final theme = {
+        'name': i < _presetThemes.length ? _presetThemes[i]['name'] : 'Equipe ${i + 1}',
+        'color': _presetThemes[i % _presetThemes.length]['color'],
+      };
       final captain = _pickCaptains && members.isNotEmpty ? members.first : null;
 
       generated.add(TeamGroup(
@@ -243,7 +246,9 @@ class _TeamsScreenState extends State<TeamsScreen> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () => setState(() => _teamsCount++),
+                    onPressed: () {
+                      if (_teamsCount < 20) setState(() => _teamsCount++);
+                    },
                     icon: const Icon(Icons.add_rounded, color: AppColors.petroleo),
                     style: IconButton.styleFrom(backgroundColor: AppColors.areia),
                   ),

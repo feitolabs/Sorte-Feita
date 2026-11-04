@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/theme/app_colors.dart';
 import '../core/random/crypto_random.dart';
+import '../core/logic/grouping.dart';
 
 class PairsScreen extends StatefulWidget {
   const PairsScreen({super.key});
@@ -34,20 +35,7 @@ class _PairsScreenState extends State<PairsScreen> {
     }
 
     final shuffled = CryptoRandom.shuffle(participants);
-    final List<List<String>> result = [];
-
-    for (int i = 0; i < shuffled.length; i += _groupSize) {
-      if (i + _groupSize <= shuffled.length) {
-        result.add(shuffled.sublist(i, i + _groupSize));
-      } else {
-        // Handle odd remainder: append to last group to make trio or keep as remainder
-        if (result.isNotEmpty) {
-          result.last.addAll(shuffled.sublist(i));
-        } else {
-          result.add(shuffled.sublist(i));
-        }
-      }
-    }
+    final result = buildGroups(shuffled, _groupSize);
 
     setState(() {
       _groups = result;

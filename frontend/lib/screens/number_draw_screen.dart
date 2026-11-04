@@ -36,14 +36,28 @@ class _NumberDrawScreenState extends State<NumberDrawScreen> {
   }
 
   void _drawNumbers() {
-    final minVal = int.tryParse(_minController.text) ?? 1;
-    final maxVal = int.tryParse(_maxController.text) ?? 100;
-    final count = int.tryParse(_countController.text) ?? 1;
+    final minVal = int.tryParse(_minController.text.trim());
+    final maxVal = int.tryParse(_maxController.text.trim());
+    final count = int.tryParse(_countController.text.trim());
+
+    void warn(String m) => ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(m)));
+
+    if (minVal == null || maxVal == null || count == null) {
+      warn('Preencha mínimo, máximo e quantidade com números inteiros');
+      return;
+    }
+    if (count < 1 || count > 1000) {
+      warn('A quantidade deve ficar entre 1 e 1000');
+      return;
+    }
+    if (maxVal - minVal > 1000000) {
+      warn('O intervalo pode ter no máximo 1.000.000 de números');
+      return;
+    }
 
     if (minVal > maxVal) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Valor mínimo não pode ser maior que o máximo')),
-      );
+      warn('Valor mínimo não pode ser maior que o máximo');
       return;
     }
 

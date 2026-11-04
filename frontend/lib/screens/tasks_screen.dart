@@ -22,7 +22,7 @@ class _TasksScreenState extends State<TasksScreen> {
   bool _showResult = false;
 
   void _assignTasks() {
-    final people = _peopleController.text.split('\n').map((l) => l.trim()).where((l) => l.isNotEmpty).toList();
+    final people = CryptoRandom.shuffle(_peopleController.text.split('\n').map((l) => l.trim()).where((l) => l.isNotEmpty).toSet().toList());
     final tasks = _tasksController.text.split('\n').map((l) => l.trim()).where((l) => l.isNotEmpty).toList();
 
     if (people.isEmpty || tasks.isEmpty) {

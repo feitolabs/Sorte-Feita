@@ -90,6 +90,11 @@ class _WheelScreenState extends State<WheelScreen> with SingleTickerProviderStat
             result: _lastWinner!.label,
           ));
         }
+
+        // "Remover vencedor após giro": tira o sorteado das próximas rodadas.
+        if (_wheel.removeOnWin && _lastWinner != null && _activeOptions.length > 1) {
+          setState(() => _lastWinner!.active = false);
+        }
       }
     });
   }
@@ -123,9 +128,22 @@ class _WheelScreenState extends State<WheelScreen> with SingleTickerProviderStat
     });
 
     // 1. Pick winner using Python backend or offline CSPRNG
-    final result = await ApiClient.spinWheel(_wheel);
-    final winnerId = result['winner_id'] as String;
-    final winner = _activeOptions.firstWhere((o) => o.id == winnerId);
+    Map<String, dynamic> result;
+    WheelOption winner;
+    try {
+      result = await ApiClient.spinWheel(_wheel);
+      final winnerId = result['winner_id'] as String;
+      winner = _activeOptions.firstWhere((o) => o.id == winnerId);
+    } catch (_) {
+      if (mounted) {
+        setState(() => _isSpinning = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Não foi possível girar. Tente novamente.')),
+        );
+      }
+      return;
+    }
+    if (!mounted) return;
     final prob = double.tryParse(result['probability_percentage'].toString()) ?? 0.0;
 
     // 2. Compute geometry

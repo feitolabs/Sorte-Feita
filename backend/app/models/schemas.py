@@ -1,7 +1,14 @@
-from typing import List, Optional, Dict, Any
-from pydantic import BaseModel, Field
+from typing import List, Optional, Dict, Any, Annotated
+from pydantic import BaseModel, Field, StringConstraints, model_validator
 import uuid
 from datetime import datetime, timezone
+
+
+# Limites de entrada (evitam consumo excessivo de CPU/memória/disco)
+MAX_PEOPLE = 5000
+MAX_NAME_LEN = 200
+MAX_NUMBER_SPAN = 1_000_000
+Name = Annotated[str, StringConstraints(max_length=MAX_NAME_LEN)]
 
 
 def get_utc_now_iso() -> str:
@@ -21,7 +28,7 @@ class WheelOption(BaseModel):
 class WheelModel(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str = Field(..., min_length=1, max_length=80)
-    options: List[WheelOption] = Field(..., min_length=2)
+    options: List[WheelOption] = Field(..., min_length=2, max_length=500)
     different_weights: bool = False
     remove_on_win: bool = False
     created_at: str = Field(default_factory=get_utc_now_iso)
@@ -44,9 +51,9 @@ class SpinResponse(BaseModel):
 
 class NameDrawRequest(BaseModel):
     title: Optional[str] = "Sorteio de Nomes"
-    participants: List[str]
-    winners_count: int = Field(default=1, ge=1)
-    alternates_count: int = Field(default=0, ge=0)
+    participants: List[Name] = Field(..., max_length=MAX_PEOPLE)
+    winners_count: int = Field(default=1, ge=1, le=MAX_PEOPLE)
+    alternates_count: int = Field(default=0, ge=0, le=MAX_PEOPLE)
     allow_duplicates: bool = False
 
 
@@ -60,12 +67,18 @@ class NameDrawResponse(BaseModel):
 
 
 class NumberDrawRequest(BaseModel):
-    min_val: int = Field(default=1)
-    max_val: int = Field(default=100)
-    count: int = Field(default=1, ge=1)
+    min_val: int = Field(default=1, ge=-10**9, le=10**9)
+    max_val: int = Field(default=100, ge=-10**9, le=10**9)
+    count: int = Field(default=1, ge=1, le=1000)
     allow_repeat: bool = False
-    excluded: List[int] = Field(default_factory=list)
+    excluded: List[int] = Field(default_factory=list, max_length=MAX_PEOPLE)
     sort_result: bool = True
+
+    @model_validator(mode="after")
+    def _check_span(self):
+        if self.max_val - self.min_val > MAX_NUMBER_SPAN:
+            raise ValueError(f"O intervalo pode ter no máximo {MAX_NUMBER_SPAN} números.")
+        return self
 
 
 class NumberDrawResponse(BaseModel):
@@ -82,9 +95,9 @@ class Team(BaseModel):
 
 
 class TeamDrawRequest(BaseModel):
-    participants: List[str]
+    participants: List[Name] = Field(..., max_length=MAX_PEOPLE)
     mode: str = Field(default="teams_count", pattern="^(teams_count|members_per_team)$")
-    target_count: int = Field(..., ge=1)
+    target_count: int = Field(..., ge=1, le=MAX_PEOPLE)
     pick_captains: bool = True
     must_stay_together: List[List[str]] = Field(default_factory=list)
     cannot_stay_together: List[List[str]] = Field(default_factory=list)
@@ -99,7 +112,7 @@ class TeamDrawResponse(BaseModel):
 
 class DecisionRequest(BaseModel):
     question: Optional[str] = None
-    options: List[str] = Field(default_factory=lambda: ["Sim", "Não"])
+    options: List[Name] = Field(default_factory=lambda: ["Sim", "Não"], max_length=50)
 
 
 class DecisionResponse(BaseModel):

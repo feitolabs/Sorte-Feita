@@ -38,6 +38,10 @@ class BillingService extends ChangeNotifier {
       final res = await _iap.queryProductDetails({removeAdsProductId});
       if (res.productDetails.isNotEmpty) _product = res.productDetails.first;
       notifyListeners();
+      // Reinstalação/novo aparelho: recupera a compra silenciosamente.
+      if (!localStorageService.adsRemoved) {
+        await _iap.restorePurchases();
+      }
     } catch (e) {
       debugPrint('[billing] init failed (isolated): $e');
     }
@@ -47,8 +51,9 @@ class BillingService extends ChangeNotifier {
     if (_product == null || _busy) return;
     _setBusy(true, null);
     try {
-      await _iap.buyNonConsumable(
+      final started = await _iap.buyNonConsumable(
           purchaseParam: PurchaseParam(productDetails: _product!));
+      if (!started) _setBusy(false, 'Não foi possível iniciar a compra.');
     } catch (e) {
       _setBusy(false, 'Não foi possível iniciar a compra.');
     }
@@ -82,6 +87,10 @@ class BillingService extends ChangeNotifier {
           _setBusy(false, 'Anúncios removidos. Obrigado pelo apoio!');
           break;
         case PurchaseStatus.error:
+          // Já possui o item: recupera em vez de falhar.
+          if (p.error?.message.toLowerCase().contains('owned') ?? false) {
+            await _iap.restorePurchases();
+          }
           _setBusy(false, 'A compra não foi concluída.');
           break;
         case PurchaseStatus.canceled:

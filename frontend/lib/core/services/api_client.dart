@@ -4,11 +4,13 @@ import '../random/crypto_random.dart';
 import '../../models/wheel_model.dart';
 
 class ApiClient {
-  static const String baseUrl = 'http://localhost:8000/api/v1';
+  /// Backend opcional (apenas desenvolvimento). Vazio = 100% offline, nenhum nome sai do aparelho.
+  static const String baseUrl = String.fromEnvironment('API_BASE_URL');
 
   /// Spin wheel with Python backend, fallback to local CSPRNG
   static Future<Map<String, dynamic>> spinWheel(WheelModel wheel) async {
     try {
+      if (baseUrl.isEmpty) throw StateError('offline');
       final response = await http.post(
         Uri.parse('$baseUrl/wheel/spin'),
         headers: {'Content-Type': 'application/json'},
@@ -28,7 +30,9 @@ class ApiClient {
       ).timeout(const Duration(milliseconds: 1500));
 
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        final id = data['winner_id'];
+        if (wheel.options.any((o) => o.active && o.id == id)) return data;
       }
     } catch (_) {
       // Backend not running or timeout; fall through to local CSPRNG engine!
