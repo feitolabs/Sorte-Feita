@@ -39,3 +39,4 @@ def root():
         "creator": "Feito Labs",
         "docs": "/docs" if settings.DEBUG else None
     }
+

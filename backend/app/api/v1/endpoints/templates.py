@@ -57,3 +57,4 @@ TEMPLATES_DATA: List[Dict[str, Any]] = [
 @router.get("", response_model=List[Dict[str, Any]])
 def list_templates():
     return TEMPLATES_DATA
+

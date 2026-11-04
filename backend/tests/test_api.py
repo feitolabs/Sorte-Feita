@@ -56,3 +56,4 @@ def test_teams_api():
     data = response.json()
     assert len(data["teams"]) == 2
     assert sum(len(t["members"]) for t in data["teams"]) == 6
+

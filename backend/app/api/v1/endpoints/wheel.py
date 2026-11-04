@@ -40,3 +40,4 @@ def delete_saved_wheel(wheel_id: str):
     if not success:
         raise HTTPException(status_code=404, detail="Roleta não encontrada")
     return {"message": "Roleta excluída com sucesso"}
+

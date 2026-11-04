@@ -116,3 +116,4 @@ class HistoryItem(BaseModel):
     config_snapshot: Dict[str, Any]
     result: Any
     is_favorite: bool = False
+

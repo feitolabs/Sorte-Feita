@@ -101,3 +101,4 @@ def weighted_choice_index(weights: List[float], rng: RandomSource = default_rand
         if r <= cumulative:
             return idx
     return len(weights) - 1
+

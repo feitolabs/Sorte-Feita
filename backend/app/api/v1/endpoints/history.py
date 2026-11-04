@@ -28,3 +28,4 @@ def delete_history_item(activity_id: str):
 def clear_all_history():
     storage_service.clear_activities()
     return {"message": "Histórico limpo com sucesso"}
+

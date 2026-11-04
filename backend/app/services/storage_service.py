@@ -80,3 +80,4 @@ class LocalStorageService:
 
 
 storage_service = LocalStorageService()
+

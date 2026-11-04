@@ -111,3 +111,4 @@ def test_draw_teams_balanced():
     for team in res.teams:
         assert team.captain is not None
         assert team.captain in team.members
+

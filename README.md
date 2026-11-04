@@ -138,3 +138,4 @@ flutter run
 - O arquivo `.env` está devidamente listado no `.gitignore`.
 - Variáveis são gerenciadas via `pydantic-settings` no Python e `shared_preferences` no Flutter.
 - Código 100% auditado por testes unitários e integrados.
+

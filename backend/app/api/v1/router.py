@@ -13,3 +13,4 @@ api_v1_router.include_router(draws_router)
 api_v1_router.include_router(teams_router)
 api_v1_router.include_router(history_router)
 api_v1_router.include_router(templates_router)
+
