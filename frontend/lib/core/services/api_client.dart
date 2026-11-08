@@ -4,11 +4,14 @@ import '../random/crypto_random.dart';
 import '../../models/wheel_model.dart';
 
 class ApiClient {
-  static const String baseUrl = 'http://localhost:8000/api/v1';
+  /// Backend opcional. Vazio = 100% offline (padrão nas lojas).
+  /// Para usar: flutter run --dart-define=API_BASE_URL=https://seu-dominio/api/v1
+  static const String baseUrl =
+      String.fromEnvironment('API_BASE_URL', defaultValue: '');
 
   /// Spin wheel with Python backend, fallback to local CSPRNG
   static Future<Map<String, dynamic>> spinWheel(WheelModel wheel) async {
-    try {
+    if (baseUrl.isNotEmpty) try {
       final response = await http.post(
         Uri.parse('$baseUrl/wheel/spin'),
         headers: {'Content-Type': 'application/json'},
