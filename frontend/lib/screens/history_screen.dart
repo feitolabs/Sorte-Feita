@@ -1,3 +1,5 @@
+import 'pairs_screen.dart';
+import 'tasks_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -278,6 +280,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                   Navigator.push(context, MaterialPageRoute(builder: (_) => const TeamsScreen()));
                                 } else if (item.type == 'number_draw') {
                                   Navigator.push(context, MaterialPageRoute(builder: (_) => const NumberDrawScreen()));
+                                } else if (item.type == 'pairs') {
+                                  Navigator.push(context, MaterialPageRoute(builder: (_) => const PairsScreen()));
+                                } else if (item.type == 'tasks') {
+                                  Navigator.push(context, MaterialPageRoute(builder: (_) => const TasksScreen()));
                                 } else {
                                   Navigator.push(context, MaterialPageRoute(builder: (_) => const DecisionScreen()));
                                 }

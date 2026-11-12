@@ -1,3 +1,6 @@
+import 'number_draw_screen.dart';
+import 'pairs_screen.dart';
+import 'tasks_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -326,6 +329,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.push(context, MaterialPageRoute(builder: (_) => const NameDrawScreen()));
             } else if (entry.type == 'teams') {
               Navigator.push(context, MaterialPageRoute(builder: (_) => const TeamsScreen()));
+            } else if (entry.type == 'number_draw') {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const NumberDrawScreen()));
+            } else if (entry.type == 'pairs') {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const PairsScreen()));
+            } else if (entry.type == 'tasks') {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const TasksScreen()));
             } else {
               Navigator.push(context, MaterialPageRoute(builder: (_) => const DecisionScreen()));
             }

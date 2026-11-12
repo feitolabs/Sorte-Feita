@@ -36,9 +36,29 @@ class _NumberDrawScreenState extends State<NumberDrawScreen> {
   }
 
   void _drawNumbers() {
-    final minVal = int.tryParse(_minController.text) ?? 1;
-    final maxVal = int.tryParse(_maxController.text) ?? 100;
-    final count = int.tryParse(_countController.text) ?? 1;
+    final minVal = int.tryParse(_minController.text.trim());
+    final maxVal = int.tryParse(_maxController.text.trim());
+    final count = int.tryParse(_countController.text.trim());
+
+    void aviso(String msg) =>
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+
+    if (minVal == null || maxVal == null) {
+      aviso('Informe números inteiros válidos para o mínimo e o máximo');
+      return;
+    }
+    if (count == null || count < 1) {
+      aviso('A quantidade deve ser pelo menos 1');
+      return;
+    }
+    if (count > 1000) {
+      aviso('A quantidade máxima por sorteio é 1000');
+      return;
+    }
+    if (maxVal - minVal > 1000000) {
+      aviso('O intervalo máximo é de 1.000.000 de números');
+      return;
+    }
 
     if (minVal > maxVal) {
       ScaffoldMessenger.of(context).showSnackBar(

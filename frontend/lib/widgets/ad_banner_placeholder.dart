@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/theme/app_colors.dart';
 
+/// Nesta versão não há anúncios: o espaço fica oculto.
+/// Mude para true apenas ao integrar o AdMob.
+const bool kShowAdSpace = false;
+
 class AdBannerPlaceholder extends StatelessWidget {
   final double height;
   final EdgeInsetsGeometry margin;
@@ -14,6 +18,7 @@ class AdBannerPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!kShowAdSpace) return const SizedBox.shrink();
     return Container(
       height: height,
       margin: margin,

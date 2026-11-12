@@ -63,6 +63,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/google_fonts/
     - assets/abertura/
     - assets/abertura/png/
     - assets/icone/

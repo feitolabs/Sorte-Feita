@@ -89,7 +89,9 @@ class _TeamsScreenState extends State<TeamsScreen> {
       final captain = _pickCaptains && members.isNotEmpty ? members.first : null;
 
       generated.add(TeamGroup(
-        name: theme['name'],
+        name: i < _presetThemes.length
+            ? theme['name']
+            : '${theme['name']} ${i ~/ _presetThemes.length + 1}',
         headerColor: theme['color'],
         captain: captain,
         members: members,

@@ -3,6 +3,38 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:share_plus/share_plus.dart';
 import '../core/theme/app_colors.dart';
 import '../core/random/crypto_random.dart';
+import '../core/storage/local_storage_service.dart';
+import '../models/history_entry.dart';
+
+/// Divide [shuffled] em grupos de [groupSize] (2 ou 3), resolvendo as sobras:
+/// duplas com 1 sobrando viram 1 trio; trios com 1 sobrando viram 2 duplas;
+/// trios com 2 sobrando viram 1 dupla.
+List<List<String>> groupParticipants(List<String> shuffled, int groupSize) {
+  final result = <List<String>>[];
+  final n = shuffled.length;
+  int i = 0;
+  while (i < n) {
+    final left = n - i;
+    if (groupSize == 2) {
+      if (left == 3) {
+        result.add(shuffled.sublist(i, i + 3));
+        break;
+      }
+      result.add(shuffled.sublist(i, i + 2));
+      i += 2;
+    } else {
+      if (left == 4) {
+        result.add(shuffled.sublist(i, i + 2));
+        result.add(shuffled.sublist(i + 2, i + 4));
+        break;
+      }
+      final size = left < 3 ? left : 3;
+      result.add(shuffled.sublist(i, i + size));
+      i += size;
+    }
+  }
+  return result;
+}
 
 class PairsScreen extends StatefulWidget {
   const PairsScreen({super.key});
@@ -35,25 +67,20 @@ class _PairsScreenState extends State<PairsScreen> {
     }
 
     final shuffled = CryptoRandom.shuffle(participants);
-    final List<List<String>> result = [];
-
-    for (int i = 0; i < shuffled.length; i += _groupSize) {
-      if (i + _groupSize <= shuffled.length) {
-        result.add(shuffled.sublist(i, i + _groupSize));
-      } else {
-        // Handle odd remainder: append to last group to make trio or keep as remainder
-        if (result.isNotEmpty) {
-          result.last.addAll(shuffled.sublist(i));
-        } else {
-          result.add(shuffled.sublist(i));
-        }
-      }
-    }
+    final result = groupParticipants(shuffled, _groupSize);
 
     setState(() {
       _groups = result;
       _showResult = true;
     });
+
+    localStorageService.addHistoryEntry(HistoryEntry(
+      type: 'pairs',
+      title: _groupSize == 2 ? 'Duplas' : 'Trios',
+      summary: '${participants.length} participantes · ${result.length} grupos',
+      configSnapshot: {'group_size': _groupSize, 'participants': participants},
+      result: result,
+    ));
   }
 
   @override

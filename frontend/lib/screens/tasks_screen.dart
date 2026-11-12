@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/theme/app_colors.dart';
 import '../core/random/crypto_random.dart';
+import '../core/storage/local_storage_service.dart';
+import '../models/history_entry.dart';
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({super.key});
@@ -48,6 +50,14 @@ class _TasksScreenState extends State<TasksScreen> {
       _assignments = result;
       _showResult = true;
     });
+
+    localStorageService.addHistoryEntry(HistoryEntry(
+      type: 'tasks',
+      title: 'Distribuição de Tarefas',
+      summary: '${tasks.length} tarefas · ${people.length} pessoas',
+      configSnapshot: {'people': people, 'tasks': tasks},
+      result: result,
+    ));
   }
 
   @override
