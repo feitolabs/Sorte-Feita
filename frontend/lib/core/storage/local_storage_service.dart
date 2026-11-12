@@ -57,30 +57,20 @@ class LocalStorageService extends ChangeNotifier {
         _history = [];
       }
     } else {
-      // Default seed history for first run
-      _history = [
-        HistoryEntry(
-          type: 'wheel',
-          title: 'O que comer hoje',
-          summary: 'Roleta · 6 opções · ontem',
-          createdAt: DateTime.now().subtract(const Duration(days: 1)),
-          configSnapshot: WheelModel.defaultFoodWheel().toJson(),
-          result: 'Hambúrguer',
-        ),
-        HistoryEntry(
-          type: 'name_draw',
-          title: 'Turma 7B · apresentação',
-          summary: 'Nomes · 28 participantes · seg.',
-          createdAt: DateTime.now().subtract(const Duration(days: 2)),
-          configSnapshot: {
-            'winners_count': 3,
-            'alternates_count': 2,
-            'participants': ['Ana', 'Bruno', 'Carla', 'Diego']
-          },
-          result: ['Gabriela', 'Diego', 'Ana Beatriz'],
-        ),
-      ];
-      _saveHistory();
+      // Primeira abertura: começa sem histórico (sem dados de exemplo).
+      _history = [];
+    }
+  }
+
+  static const int _maxHistory = 200;
+
+  /// Mantém no máximo [_maxHistory] itens, removendo os mais antigos
+  /// que não são favoritos.
+  void _trimHistory() {
+    var i = _history.length - 1;
+    while (_history.length > _maxHistory && i >= 0) {
+      if (!_history[i].isFavorite) _history.removeAt(i);
+      i--;
     }
   }
 
@@ -116,6 +106,7 @@ class LocalStorageService extends ChangeNotifier {
   // --- History actions ---
   Future<void> addHistoryEntry(HistoryEntry entry) async {
     _history.insert(0, entry);
+    _trimHistory();
     await _saveHistory();
     notifyListeners();
   }
